@@ -1,0 +1,62 @@
+﻿@page "/Dashboard/Cities"
+
+@using GocServer.Application.DTOs.Entities.CityDto
+@using System.Security.Cryptography
+@inject HttpClient HttpClient
+
+<div class="row mb-3">
+    <div class="col-12 col-md-6">
+        <h3>CityTable</h3>
+    </div>
+    <div class="col-12 col-md-6 text-end">
+        <NavLink href="/Cities/Upsert" class="btn btn-outline-success ">Add New City</NavLink>
+    </div>
+</div>
+
+@if (_cities.Count > 0)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Active</th>
+            <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        @for (int i = 0; i < _cities.Count; i++)
+        {
+            <tr>
+                <th>@(i + 1)</th>
+                <td>@_cities[i].Name</td>
+                <td>@(_cities[i].IsActive == true ? "Yes" : "No")</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <NavLink href=@($"/Cities/Upsert/{_cities[i].Id}") class="btn btn-outline-primary">Edit</NavLink>
+                        <NavLink href=@($"/Cities/Details/{_cities[i].Id}") class="btn btn-outline-info">Details</NavLink>
+                        <NavLink href=@($"/Cities/Delete/{_cities[i].Id}") class="btn btn-outline-danger">Delete</NavLink>
+                    </div>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+}
+
+else
+{
+    <h1 class="text-danger text-center">No Data</h1>
+}
+
+
+@code {
+    private List<GetCityDto> _cities { get; set; } = new List<GetCityDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _cities = await HttpClient.GetFromJsonAsync<List<GetCityDto>>("api/Cities/GetAll");
+    }
+
+}

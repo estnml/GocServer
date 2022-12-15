@@ -9,9 +9,8 @@ namespace GocServer.Application.DTOs.Entities.CityDto
 {
     public class GetCityDto
     {
-        
+        public Guid Id { get; set; }
         public string Name { get; set; }
-
         public bool IsActive { get; set; }
 
 
@@ -21,7 +20,7 @@ namespace GocServer.Application.DTOs.Entities.CityDto
             {
                 Name = city.Name,
                 IsActive = city.IsActive,
-                
+                Id = city.Id
             };
         }
     }
