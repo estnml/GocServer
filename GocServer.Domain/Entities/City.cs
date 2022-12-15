@@ -12,5 +12,6 @@ namespace GocServer.Domain.Entities
         public string Name { get; set; }
 
         public bool IsActive { get; set; } = false;
+        
     }
 }

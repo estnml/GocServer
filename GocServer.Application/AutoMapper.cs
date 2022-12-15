@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using GocServer.Application.DTOs.Entities.Create;
-using GocServer.Application.DTOs.Entities.Get;
+using GocServer.Application.DTOs.Entities.CityDto;
 using GocServer.Domain.Entities;
 using GocServer.Domain.Entities.Identity;
 using System;
@@ -15,19 +14,7 @@ namespace GocServer.Application
     {
         public AutoMapper()
         {
-            // Create
-            CreateMap<CreateCityDto, City>();
-
-
-
-            // GET
-            CreateMap<City, GetCityDto>();
-            CreateMap<Device, GetDeviceDto>();
-            CreateMap<Notification, GetNotificationDto>();
-            CreateMap<User, GetUserDto>();
-            CreateMap<Module, GetModuleDto>();
-            CreateMap<District, GetDistrictDto>();
-            CreateMap<Log, GetLogDto>();
+            
         }
     }
 }

@@ -12,7 +12,7 @@ namespace GocServer.Application
     {
         public static void RegisterApplicationServices(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(AutoMapper));
+            
         }
     }
 }

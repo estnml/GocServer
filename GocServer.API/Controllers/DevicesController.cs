@@ -1,7 +1,9 @@
-﻿using GocServer.Application.DTOs.Entities.Create;
-using GocServer.Application.DTOs.Entities.Get;
+﻿using GocServer.Application.DTOs.Entities.DeviceDto;
+using GocServer.Application.Interfaces.Repositories;
+using GocServer.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GocServer.API.Controllers
 {
@@ -9,11 +11,19 @@ namespace GocServer.API.Controllers
     [ApiController]
     public class DevicesController : ControllerBase
     {
+        private readonly IDeviceRepository _deviceRepository;
+
+        public DevicesController(IDeviceRepository deviceRepository)
+        {
+            _deviceRepository = deviceRepository;
+        }
+
+
         [HttpGet]
         [Route("GetAll")]
         public async Task<ActionResult<IEnumerable<GetDeviceDto>>> GetAll()
         {
-            return Ok();
+            return Ok(await _deviceRepository.GetAll().ToListAsync());
         }
 
 
@@ -21,7 +31,7 @@ namespace GocServer.API.Controllers
         [Route("GetById/{id}")]
         public async Task<ActionResult<GetDeviceDto>> GetById(Guid id)
         {
-            return Ok();
+            return Ok(await _deviceRepository.GetByIdAsync(id));
         }
 
 
@@ -29,21 +39,39 @@ namespace GocServer.API.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok();
+            if (await _deviceRepository.RemoveByIdAsync(id))
+            {
+                await _deviceRepository.SaveChangesAsync();
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpPut]
         [Route("Edit/{id}")]
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id, [FromForm] UpsertDeviceDto deviceDto)
         {
-            return Ok();
+            if (await _deviceRepository.UpdateAsync(id, deviceDto))
+            {
+                await _deviceRepository.SaveChangesAsync();
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> Create([FromForm] CreateDeviceDto deviceDto)
+        public async Task<IActionResult> Create([FromForm] UpsertDeviceDto deviceDto)
         {
-            return Ok();
+            if (await _deviceRepository.AddAsync(deviceDto))
+            {
+                await _deviceRepository.SaveChangesAsync();
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }

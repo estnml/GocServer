@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using GocServer.Application.DTOs.Entities.Create;
-using GocServer.Application.DTOs.Entities.Edit;
-using GocServer.Application.DTOs.Entities.Get;
+using GocServer.Application.DTOs.Entities.CityDto;
 using GocServer.Application.Interfaces.Repositories;
 using GocServer.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GocServer.API.Controllers
 {
@@ -14,19 +13,17 @@ namespace GocServer.API.Controllers
     public class CitiesController : ControllerBase
     {
         private readonly ICityRepository _cityRepository;
-        private readonly IMapper _mapper;
 
-        public CitiesController(ICityRepository cityRepository, IMapper mapper)
+        public CitiesController(ICityRepository cityRepository)
         {
             _cityRepository = cityRepository;
-            _mapper = mapper;
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public IEnumerable<GetCityDto> GetAll()
+        public async Task<ActionResult<IEnumerable<GetCityDto>>> GetAll()
         {
-            return _mapper.Map<List<GetCityDto>>(_cityRepository.GetAll());
+            return Ok(await _cityRepository.GetAll().ToListAsync());
         }
 
 
@@ -34,7 +31,7 @@ namespace GocServer.API.Controllers
         [Route("GetById/{id}")]
         public async Task<ActionResult<GetCityDto>> GetById(Guid id)
         {
-            return _mapper.Map<GetCityDto>(await _cityRepository.GetByIdAsync(id));
+            return Ok(await _cityRepository.GetByIdAsync(id));
         }
 
         [HttpDelete]
@@ -43,6 +40,7 @@ namespace GocServer.API.Controllers
         {
             if (await _cityRepository.RemoveByIdAsync(id))
             {
+                await _cityRepository.SaveChangesAsync();
                 return Ok();
             }
 
@@ -51,30 +49,29 @@ namespace GocServer.API.Controllers
 
         [HttpPut]
         [Route("Edit/{id}")]
-        public async Task<ActionResult<bool>> Edit(Guid id, EditCityDto editCityDto)
+        public async Task<ActionResult<bool>> Edit(Guid id, [FromBody] UpsertCityDto cityDto)
         {
-            if (id != editCityDto.Id)
-            {
-                return BadRequest();
-            }
-
-            if(await _cityRepository.Update(editCityDto))
+            if (await _cityRepository.UpdateAsync(id, cityDto))
             {
                 await _cityRepository.SaveChangesAsync();
+                return Ok();
             }
 
-            return Ok();
+
+            return BadRequest();
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> Create([FromBody] CreateCityDto createCityDto)
+        public async Task<IActionResult> Create([FromBody] UpsertCityDto cityDto)
         {
-            var record = _mapper.Map<City>(createCityDto);
-            await _cityRepository.AddAsync(record);
-            await _cityRepository.SaveChangesAsync();
+            if (await _cityRepository.AddAsync(cityDto))
+            {
+                await _cityRepository.SaveChangesAsync();
+                return Ok();
+            }
 
-            return Ok();
+            return BadRequest();
         }
     }
 }

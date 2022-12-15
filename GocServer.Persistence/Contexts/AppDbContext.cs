@@ -33,6 +33,7 @@ namespace GocServer.Persistence.Contexts
         public DbSet<Device> Devices { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Module> Modules { get; set; }
+        public DbSet<Log> Logs { get; set; }
     }
 
 

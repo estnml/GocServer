@@ -6,13 +6,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GocServer.Application.DTOs.Entities.DeviceDto;
+using Microsoft.EntityFrameworkCore;
 
 namespace GocServer.Persistence.Implementations.Repositories
 {
     public class DeviceRepository : Repository<Device>, IDeviceRepository
     {
+        private readonly AppDbContext _context;
+
         public DeviceRepository(AppDbContext context) : base(context)
         {
+            _context = context;
+        }
+
+        public async Task<bool> UpdateAsync(Guid id, UpsertDeviceDto deviceDto)
+        {
+            if (id != deviceDto.Id)
+            {
+                return false;
+            }
+            
+            var objFromDb = await _context.Devices.FindAsync(id);
+
+            if (objFromDb == null)
+            {
+                return false;
+            }
+
+            objFromDb = deviceDto;
+            return true;
         }
     }
 }

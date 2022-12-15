@@ -19,11 +19,10 @@ namespace GocServer.Application.Interfaces.Repositories
         void RemoveAsync(T entity);
         void RemoveRangeAsync(IEnumerable<T> entities);
 
-        Task AddAsync(T entity);
+        Task<bool> AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
-
         
-
+        
         Task<int> SaveChangesAsync();
     }
 }

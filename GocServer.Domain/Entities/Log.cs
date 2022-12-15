@@ -8,7 +8,7 @@ namespace GocServer.Domain.Entities
 {
     public class Log
     {
-        
+        public Guid Id { get; set; }
         public Guid DeviceId { get; set; }
 
 

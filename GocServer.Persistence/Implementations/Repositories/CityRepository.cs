@@ -1,5 +1,4 @@
-﻿using GocServer.Application.DTOs.Entities.Edit;
-using GocServer.Application.DTOs.Entities.Get;
+﻿using GocServer.Application.DTOs.Entities.CityDto;
 using GocServer.Application.Interfaces.Repositories;
 using GocServer.Domain.Entities;
 using GocServer.Persistence.Contexts;
@@ -21,18 +20,22 @@ namespace GocServer.Persistence.Implementations.Repositories
             _context = context;
         }
 
-        public async Task<bool> Update(EditCityDto editCityDto)
+
+        public async Task<bool> UpdateAsync(Guid id, UpsertCityDto cityDto)
         {
-            var objFromDb = await _context.Cities.FirstOrDefaultAsync(c => c.Id == editCityDto.Id);
+            if (id != cityDto.Id)
+            {
+                return false;
+            }
+
+            var objFromDb = await _context.Cities.FindAsync(id);
 
             if (objFromDb == null)
             {
                 return false;
             }
 
-            objFromDb.IsActive = editCityDto.IsActive;
-            objFromDb.Name = editCityDto.Name;
-
+            objFromDb = cityDto;
             return true;
         }
     }

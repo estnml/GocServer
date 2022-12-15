@@ -20,15 +20,22 @@ namespace GocServer.Persistence.Implementations.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public async Task AddAsync(T entity)
+        public async Task<bool> AddAsync(T entity)
         {
             var result = await Table.AddAsync(entity);
+            if (result.State == EntityState.Added)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public async Task AddRangeAsync(IEnumerable<T> entities)
         {
             await Table.AddRangeAsync(entities);
         }
+        
 
         public IQueryable<T> GetAll()
         {
@@ -67,7 +74,5 @@ namespace GocServer.Persistence.Implementations.Repositories
         {
             return await _context.SaveChangesAsync();
         }
-
-        
     }
 }

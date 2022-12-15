@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocServer.API", "GocServer.API\GocServer.API.csproj", "{D7BEAD84-AB1B-4C0D-95B4-1114CDCB6444}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GocServer.API", "GocServer.API\GocServer.API.csproj", "{D7BEAD84-AB1B-4C0D-95B4-1114CDCB6444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocServer.UI", "GocServer.UI\GocServer.UI.csproj", "{AEEE8D7B-EB06-4A3F-809C-B793ABACC55B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GocServer.UI", "GocServer.UI\GocServer.UI.csproj", "{AEEE8D7B-EB06-4A3F-809C-B793ABACC55B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocServer.Domain", "GocServer.Domain\GocServer.Domain.csproj", "{68540AC1-B809-4643-960C-E9B8F01BB267}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GocServer.Domain", "GocServer.Domain\GocServer.Domain.csproj", "{68540AC1-B809-4643-960C-E9B8F01BB267}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocServer.Application", "GocServer.Application\GocServer.Application.csproj", "{8B1844CE-AA06-4AD4-9FCE-EB688B7D49A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GocServer.Application", "GocServer.Application\GocServer.Application.csproj", "{8B1844CE-AA06-4AD4-9FCE-EB688B7D49A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GocServer.Persistence", "GocServer.Persistence\GocServer.Persistence.csproj", "{40E254E6-F18E-4B8F-BAF3-72D7788E404D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GocServer.Persistence", "GocServer.Persistence\GocServer.Persistence.csproj", "{40E254E6-F18E-4B8F-BAF3-72D7788E404D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
