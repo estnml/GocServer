@@ -1,5 +1,4 @@
 ﻿using GocServer.Application.DTOs.Entities.ModuleDto;
-using GocServer.Application.DTOs.Entities.NotificationDto;
 using GocServer.Application.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

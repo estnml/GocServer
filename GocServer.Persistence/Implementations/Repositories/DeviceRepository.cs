@@ -27,7 +27,7 @@ namespace GocServer.Persistence.Implementations.Repositories
                 return false;
             }
             
-            var objFromDb = await _context.Devices.FindAsync(id);
+            var objFromDb = await _context.Devices.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
 
             if (objFromDb == null)
             {
@@ -35,6 +35,8 @@ namespace GocServer.Persistence.Implementations.Repositories
             }
 
             objFromDb = deviceDto;
+            _context.Entry(objFromDb).State = EntityState.Modified;
+
             return true;
         }
     }

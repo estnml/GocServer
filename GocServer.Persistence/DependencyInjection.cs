@@ -31,10 +31,14 @@ namespace GocServer.Persistence
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IDeviceRepository, DeviceRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<IModuleRepository, ModuleRepository>();
+            services.AddScoped<IDistrictRepository, DistrictRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
 
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IJwtService,JwtService>();
+            services.AddScoped<IJwtService, JwtService>();
         }
     }
 }

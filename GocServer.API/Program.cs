@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
-    .AddCors(x => x.AddPolicy("BlazorClient", p => p.WithOrigins("https://localhost:7058").AllowAnyMethod().AllowAnyMethod()));
+    .AddCors(x => x.AddPolicy("VueClient", p => p.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowAnyMethod()));
 
 builder.Services.AddAuthentication(options =>
 {
@@ -50,7 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("BlazorClient");
+app.UseCors("VueClient");
 app.UseHttpsRedirection();
 
 

@@ -49,7 +49,7 @@ namespace GocServer.API.Controllers
 
         [HttpPut]
         [Route("Edit/{id}")]
-        public async Task<ActionResult<bool>> Edit(Guid id, [FromBody] UpsertCityDto cityDto)
+        public async Task<ActionResult<bool>> Edit([FromRoute] Guid id, [FromBody] UpsertCityDto cityDto)
         {
             if (await _cityRepository.UpdateAsync(id, cityDto))
             {

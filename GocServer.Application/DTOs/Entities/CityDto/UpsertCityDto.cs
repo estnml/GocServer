@@ -4,7 +4,7 @@ namespace GocServer.Application.DTOs.Entities.CityDto;
 
 public class UpsertCityDto
 {
-    public Guid? Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public bool IsActive { get; set; } = false;
 
@@ -12,6 +12,7 @@ public class UpsertCityDto
     {
         return new()
         {
+            Id = cityDto.Id,
             Name = cityDto.Name,
             IsActive = cityDto.IsActive
         };

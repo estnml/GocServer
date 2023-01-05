@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GocServer.Application.DTOs.Entities.DistrictDto;
+using Microsoft.EntityFrameworkCore;
 
 namespace GocServer.Persistence.Implementations.Repositories
 {
@@ -26,7 +27,7 @@ namespace GocServer.Persistence.Implementations.Repositories
                 return false;
             }
 
-            var objFromDb = await _context.Districts.FindAsync(id);
+            var objFromDb = await _context.Districts.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
             if (objFromDb == null)
             {
@@ -34,6 +35,8 @@ namespace GocServer.Persistence.Implementations.Repositories
             }
 
             objFromDb = districtDto;
+            _context.Entry(objFromDb).State = EntityState.Modified;
+
             return true;
         }
     }
